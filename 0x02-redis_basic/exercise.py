@@ -26,9 +26,10 @@ def call_history(method: Callable) -> Callable:
 
         self._redis.rpush(input_key, str(args))
         result = method(self, *args, **kwargs)
-        self._redis.rpush(output_key, str(result))
+        self._redis.rpush(output_key, result)  # ✅ FIXED
         return result
     return wrapper
+
 
 
 def replay(method: Callable):
